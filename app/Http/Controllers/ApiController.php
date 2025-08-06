@@ -16,7 +16,7 @@ class ApiController extends Controller
                 'data' => [],
             ],
             200
-        );        
+        );
     }
 
     public function clients()
@@ -27,7 +27,7 @@ class ApiController extends Controller
             [
                 'status' => 'OK',
                 'message' => 'success',
-                'data' => $clients
+                'data' => $clients,
             ],
             200
         );
@@ -41,7 +41,7 @@ class ApiController extends Controller
             [
                 'status' => 'OK',
                 'message' => 'success',
-                'data' => $client
+                'data' => $client,
             ],
             200
         );
@@ -49,7 +49,7 @@ class ApiController extends Controller
 
     public function client(Request $request)
     {
-        if(!$request->id) {
+        if (! $request->id) {
             return response()->json(
                 [
                     'status' => 'error',
@@ -65,15 +65,15 @@ class ApiController extends Controller
             [
                 'status' => 'OK',
                 'message' => 'success',
-                'data' => $client
+                'data' => $client,
             ],
             200
         );
     }
-    
+
     public function addClient(Request $request)
     {
-        $client = new Client();
+        $client = new Client;
         $client->name = $request->name;
         $client->email = $request->email;
         $client->save();
@@ -82,19 +82,19 @@ class ApiController extends Controller
             [
                 'status' => 'OK',
                 'message' => 'success',
-                'data' => $client
+                'data' => $client,
             ],
             201
         );
     }
 
-    public function updateClient (Request $request)
+    public function updateClient(Request $request)
     {
-        if(!$request->id) {
+        if (! $request->id) {
             return response()->json(
                 [
                     'status' => 'error',
-                    'message' => 'Client ID is required'
+                    'message' => 'Client ID is required',
                 ],
                 400
             );
@@ -109,7 +109,7 @@ class ApiController extends Controller
             [
                 'status' => 'OK',
                 'message' => 'success',
-                'data' => $client
+                'data' => $client,
             ],
             200
         );
