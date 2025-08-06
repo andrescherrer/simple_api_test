@@ -90,7 +90,7 @@ class ApiController extends Controller
 
     public function updateClient (Request $request)
     {
-        if(!$request) {
+        if(!$request->id) {
             return response()->json(
                 [
                     'status' => 'error',
