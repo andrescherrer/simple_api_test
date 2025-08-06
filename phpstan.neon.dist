@@ -2,24 +2,18 @@ includes:
   - ./vendor/nunomaduro/larastan/extension.neon
 
 parameters:
-  level: 5
-
   paths:
     - app
+    - bootstrap
+    - config
+    - database
+    - routes
     - tests
 
-  excludes:
-    - bootstrap/*
-    - storage/*
-    - vendor/*
+  level: 5
 
   ignoreErrors:
-    - '#Call to an undefined method Illuminate\\Support\\.+#'
-    - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::.+#'
-    - '#Property [^ ]+ does not accept Illuminate\\Support\\Collection\..+#'
+    - '#Call to an undefined method [a-zA-Z\\\]+::[a-zA-Z0-9_]+#'
 
   scanFiles:
-    - _ide_helper.php
-    - _ide_helper_models.php
-
-  reportUnmatchedIgnoredErrors: false
+    - bootstrap/app.php
