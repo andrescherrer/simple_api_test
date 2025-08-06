@@ -8,23 +8,18 @@ parameters:
     - app
     - tests
 
-  excludes_analyse:
-    - bootstrap
-    - storage
-    - vendor
+  excludes:
+    - bootstrap/*
+    - storage/*
+    - vendor/*
 
-  checkMissingIterableValueType: false
-  checkMissingCallableSignature: false
   ignoreErrors:
-    # Ignora erros de tipos dinâmicos muito comuns em Laravel
     - '#Call to an undefined method Illuminate\\Support\\.+#'
     - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::.+#'
     - '#Property [^ ]+ does not accept Illuminate\\Support\\Collection\..+#'
 
-  # Ajuda a ignorar arquivos gerados automaticamente
   scanFiles:
     - _ide_helper.php
     - _ide_helper_models.php
 
-  # Exibe dicas em caso de erros
   reportUnmatchedIgnoredErrors: false
