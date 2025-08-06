@@ -1,0 +1,69 @@
+name: Code Quality & Security
+
+on:
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  quality:
+    name: Laravel Code Quality
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP with Composer
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, bcmath, xml
+          tools: composer, phpstan, symfony
+          coverage: none
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: composer-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-interaction
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate --strict
+
+      - name: Audit Composer dependencies
+        run: composer audit || true
+
+      - name: PHP Syntax Check (lint)
+        run: find . -type f -name "*.php" -not -path "./vendor/*" -print0 | xargs -0 -n1 php -l
+
+      - name: Run Pest Tests
+        run: ./vendor/bin/pest --colors=always --parallel
+
+      - name: Run PHPStan (Level 5 with Larastan)
+        run: ./vendor/bin/phpstan analyse --level=5
+
+      - name: Run Laravel Pint (dry run)
+        run: ./vendor/bin/pint --test
+
+      - name: Run Symfony Security Checker
+        run: symfony security:check || true
+
+      - name: Check Roave Security Advisories
+        run: |
+          if grep -q 'roave/security-advisories' composer.json; then
+            echo "Roave Security Advisories installed. ✅"
+          else
+            echo "::warning::Roave Security Advisories is not installed. Run 'composer require --dev roave/security-advisories:dev-latest'"
+          fi
+          composer require --dev \
+            laravel/pint \
+            pestphp/pest \
+            pestphp/pest-plugin-parallel \
+            nunomaduro/larastan \
+            roave/security-advisories:dev-latest
