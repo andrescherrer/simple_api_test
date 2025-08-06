@@ -43,7 +43,7 @@ jobs:
         run: find . -type f -name "*.php" -not -path "./vendor/*" -print0 | xargs -0 -n1 php -l
 
       - name: Run Pest Tests
-        run: ./vendor/bin/pest --colors=always --parallel
+        run: ./vendor/bin/pest --colors=always
 
       - name: Run PHPStan (Level 5 with Larastan)
         run: ./vendor/bin/phpstan analyse --level=5
@@ -61,9 +61,3 @@ jobs:
           else
             echo "::warning::Roave Security Advisories is not installed. Run 'composer require --dev roave/security-advisories:dev-latest'"
           fi
-          composer require --dev \
-            laravel/pint \
-            pestphp/pest \
-            pestphp/pest-plugin-parallel \
-            nunomaduro/larastan \
-            roave/security-advisories:dev-latest
