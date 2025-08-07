@@ -12,8 +12,7 @@ class ApiController extends Controller
         return response()->json(
             [
                 'status' => 'OK',
-                'message' => 'API is running OK!',
-                'data' => [],
+                'message' => 'API is running OK!'
             ],
             200
         );
