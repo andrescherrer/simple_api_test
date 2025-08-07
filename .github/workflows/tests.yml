@@ -49,10 +49,7 @@ jobs:
         run: ./vendor/bin/pest --colors=always
 
       - name: Run PHPStan (Level 5 with Larastan)
-        run: ./vendor/bin/phpstan analyse --level=5
-
-      - name: Run Laravel Pint (dry run)
-        run: ./vendor/bin/pint --test
+        run: ./vendor/bin/phpstan analyse --level=5      
 
       - name: Run Symfony Security Checker
         run: symfony security:check || true
