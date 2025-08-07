@@ -13,6 +13,7 @@ class ApiController extends Controller
             [
                 'status' => 'OK',
                 'message' => 'API is running OK!',
+                'data' => [],              
             ],
             200
         );
